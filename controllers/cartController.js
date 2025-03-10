@@ -1,5 +1,5 @@
 
-const Cart = require("../modules/Cart")
+const Cart = require("../modules/cart")
 
 exports.addToCart = async(req,res)=>{
     const {productId, name,price} = req.body

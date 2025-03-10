@@ -3,9 +3,22 @@ const connectDB = require("./config/db")
 const cors =require('cors')
 
 const app = express()
+const allowedOrigins=[
+    "https://ecom-frontend-six-self.vercel.app/",
+    "https://ecom-frontend-ark7s85ih-varun-s-projects-6f794134.vercel.app"
+];
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allows cookies and authentication headers if needed
+  }))
 connectDB()
 app.use("/auth",require("./routes/authRoutes"))
 app.use("/cart",require("./routes/cartRoutes"))
